@@ -7,9 +7,15 @@ const App = () => {
 
   const handleGamePlay= (clickedSquare) => {
     let updateBoard =[...board]
+    if(updateBoard[clickedSquare] === "❌"){
+      updateBoard[clickedSquare]= "⭕️"
+      setBoard(updateBoard)
+    }else{
     updateBoard[clickedSquare]= "❌"
     setBoard(updateBoard)
+    }
   }
+  
 
   return (
     <>
