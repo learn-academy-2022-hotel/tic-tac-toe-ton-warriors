@@ -3,12 +3,25 @@ import Square from './components/Square'
 import './App.css'
 
 const App = () => {
-  const [squares, setSquares] = useState(Array(9).fill(null))
+  const [board, setBoard] = useState(Array(9).fill(null))
+
+  
 
   return (
     <>
       <h1>Tic Tac Toe</h1>
-      <Square />
+      <div className="board">
+        {board.map((square) => {
+          return (
+            <Square square={square} />
+      
+          )
+        })
+        
+      
+      }
+
+      </div>
     </>
   )
 }
