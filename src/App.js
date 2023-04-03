@@ -1,51 +1,75 @@
 import React, { useState } from 'react'
 import Square from './components/Square'
 import './App.css'
+import './assets/morty.jpg'
+import './assets/Rick-sanchez.jpg'
 
 const App = () => {
-  const [board, setBoard] = useState(Array(9).fill(null))
-//     const [isX, setIsX] = useState(true);
-//     const handleClick = () => {
-//       if
-//     }
+  const [square, setSquare] = useState(Array(9).fill(null))
+  
+    let [playerOne, setPlayerOne] = useState(true)
+    let [playerTwo, setPlayertwo] = useState(false)
 
-const [nextValue, setNextValue] = useState(0)
-  const handleGamePlay= (clickedSquare) => {
-    let updateBoard =[...board]
-    if (nextValue % 2 === 0) {
-    updateBoard[clickedSquare] = "❌"
-    setBoard(updateBoard)
-    setNextValue = nextValue+1
-    } else {
-      updateBoard[clickedSquare]= "⭕️"
-      setBoard(updateBoard)
-      nextValue = +1
-    // }else{
-    // updateBoard[clickedSquare]= "❌"
-    // setBoard(updateBoard)
+    const handleGamePlay = (clickedSquare) => {
+      let updateBoard = [...square]
+      if(playerOne){
+        updateBoard[clickedSquare]= true ? "❌" : "⭕️"
+        setSquare(updateBoard)
+        playerOne = false
+        setPlayerOne(playerOne)
+        playerTwo = true
+        setPlayertwo(playerTwo)
+      }
+      else if(playerTwo){
+        updateBoard[clickedSquare] = true ? "⭕️" : "❌"
+        setSquare(updateBoard)
+        playerOne = true
+        setPlayerOne(playerOne)
+        playerTwo = false
+        setPlayertwo(playerTwo)
+      }
     }
-    // const renderSquare = (i) => {
-      //   return <Square value={squares[i] onClick={()=> handleClick(i)} />
-   }
-      
+  const winningSquares = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6],
+    ]
+
+    for (let i=0; i < winningSquares.length; i++) {
+      const [a, b, c] = winningSquares[i];
+      if (square[a] && square[a] === square[b] && square[a] === square[c]) {
+        alert("winner winner chicken dinner")
+      }
+    }
+
   return (
     <>
-      <h1>Tic Tac Toe</h1>
+      <main className='background'>
+      <h1 className='h1'>Rick and Morty: Tic Tac Toe</h1>
       <div className="board">
-        {board.map((square, index) => {
+        {square.map((square, index) => {
           return (
             <Square 
             square={square}
             index={index}
-            handleGamePlay={handleGamePlay}
+            handleGamePlay={handleGamePlay} 
             />
-      
-          )
-        })
-      
-      }
+            )
+          })
+          
+        }
 
       </div>
+      <br />
+      <div className='button'>
+        <button onClick={() => window.location.reload(false)} className="playagain">Play Again!</button>
+      </div>
+        </main>
     </>
   )
 }
